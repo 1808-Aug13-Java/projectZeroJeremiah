@@ -28,12 +28,10 @@ public class Driver {
 			String line = null;
 			try {
 				line = br.readLine();
-				System.out.println("line Read: " + line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(line);
 
 			while (line != null) {
 				String[] accountInfo = line.split(":");
@@ -41,7 +39,7 @@ public class Driver {
 				line = br.readLine();
 			}
 			for (String u : Controller.getUserNameSet()) {
-				System.out.println(u);
+				System.out.println("Users in file: " + u);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -90,19 +88,22 @@ public class Driver {
 				while(!loggedIn) {
 					int i =0;
 					System.out.println("Enter your User name for log in.");
-					logIn[i] = console.nextLine();
+					String enteredU = console.nextLine();
 					System.out.println("Enter your password.");
-					logIn[i++] = console.nextLine();
-					loggedIn = Controller.logIn(logIn[0], logIn[1]);
-					if(loggedIn) {
-//						Account currUser = Controller.loadAccount(logIn[0], logIn[1]);
-					}
-					
+					String enteredP = console.nextLine();
+//					loggedIn = Controller.logIn(logIn[0], logIn[1]);\
+					System.out.println("Pswd enterd: " + enteredP);
+					Account currUser = Controller.loadAccount(enteredU, enteredP);
+					System.out.println("logged in successfully as: " + currUser.toString());
+					loggedIn = true;
 				}
-
+				validInput = true; 
+//				while(loggedIn) {
+//					
+//				}
+				System.out.println("logged out");
 			} else {
-				System.out.println("To create a new account type create. Otherwise type log in.");
-				input = console.nextLine();
+				System.out.println("Invalid request. try again");
 			}
 		}
 		

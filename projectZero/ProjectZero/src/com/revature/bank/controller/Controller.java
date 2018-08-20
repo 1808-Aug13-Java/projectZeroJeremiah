@@ -2,6 +2,7 @@ package com.revature.bank.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -62,31 +63,89 @@ public class Controller {
 
 		return account;
 	}
-	
-	public static Account loadAccount(String uName, String fName, String lName, String psWord, long bal) {
+
+	public static Account loadAccount(String uName, String psword) {
 
 		Scanner console = new Scanner(System.in);
-		int setSize = userNameSet.size();
-		boolean isAccCreated = false;
 
-		while (!isAccCreated) {
-			userNameSet.add(uName);
-			if (userNameSet.size() == setSize) {
-				System.out.println("That user name has already been taken. Please enter a different user name.");
-				console = new Scanner(System.in);
-				uName = console.nextLine();
-				userNameSet.add(uName);
-			}
-			if (userNameSet.size() != setSize) {
-				isAccCreated = true;
-			}
+		BufferedReader br = null;
+		boolean password = false;
+		boolean userFound = false;
+		int userIndex;
+		ArrayList<String> accInfoRead = new ArrayList<String>();
+		try {
+			br = new BufferedReader(new FileReader("resources\\accountDB"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		try {
+			String line = null;
+			try {
+				line = br.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			while (line != null) {
+				
+				String[] accountInfo = line.split(":");
+				for(String s: accountInfo) {
+					accInfoRead.add(s);
+					System.out.println(" info read: " + s);
+				}
+				try {
+					line = br.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			while(!userFound) {
+				if (accInfoRead.contains(uName)) {
+					userFound = true;
+					userIndex = accInfoRead.indexOf(uName);
+					System.out.println("paswrd: " + accInfoRead.get(userIndex + 3));
+					while (!password) {
+						if (!accInfoRead.get(userIndex+3).equals(psword)) {
+							System.out.println("Invalid password. Please try again. " + psword);
+							psword = console.nextLine();
+						} else {
+							System.out.println("password correct: " + psword);
+							password = true;
+						}
+					}
+					console.close();
+					return retrieveAccount(accInfoRead.get(userIndex), accInfoRead.get(userIndex + 1), accInfoRead.get(userIndex + 2), accInfoRead.get(userIndex + 3),
+							Long.parseLong(accInfoRead.get(userIndex + 4)));
+
+				}else {
+					System.out.println("User does not exist");
+				}
+			}
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+//		User user = new User(uName, fName, lName, psWord);
+//		Account account = new Account(user, bal);
+
+		console.close();
+
+		return null;
+	}
+	
+	public static Account retrieveAccount(String uName, String fName, String lName, String psWord, long bal) {
 
 		User user = new User(uName, fName, lName, psWord);
 		Account account = new Account(user, bal);
-
-		System.out.println("New account created: " + account.toString());
-		console.close();
 
 		return account;
 	}
@@ -134,10 +193,9 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
 	public static boolean logIn(String userName, String passWord) {
 		return false;
 	}
-
 
 }
