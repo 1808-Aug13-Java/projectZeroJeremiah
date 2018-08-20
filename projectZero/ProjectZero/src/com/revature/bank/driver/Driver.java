@@ -61,7 +61,9 @@ public class Driver {
 
 		Scanner console = new Scanner(System.in);
 		boolean validInput = false;
+		boolean loggedIn = false;
 		ArrayList<String> accountCreate = new ArrayList<String>();
+		String[] logIn = new String[2];
 		while (!validInput) {
 			System.out.println("To create a new account type create. Otherwise type log in.");
 			input = console.nextLine();
@@ -79,12 +81,24 @@ public class Driver {
 				accountCreate.add(console.nextLine());
 				System.out.println("");
 
-				Account acc = Controller.CreateAccount(accountCreate.get(0), accountCreate.get(1), accountCreate.get(2),
+				Account acc = Controller.createAccount(accountCreate.get(0), accountCreate.get(1), accountCreate.get(2),
 						accountCreate.get(3), Long.parseLong(accountCreate.get(4)));
 				validInput = true;
 				Controller.saveAccount(acc);
 
 			} else if (input.equals("log in")) {
+				while(!loggedIn) {
+					int i =0;
+					System.out.println("Enter your User name for log in.");
+					logIn[i] = console.nextLine();
+					System.out.println("Enter your password.");
+					logIn[i++] = console.nextLine();
+					loggedIn = Controller.logIn(logIn[0], logIn[1]);
+					if(loggedIn) {
+//						Account currUser = Controller.loadAccount(logIn[0], logIn[1]);
+					}
+					
+				}
 
 			} else {
 				System.out.println("To create a new account type create. Otherwise type log in.");

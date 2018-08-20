@@ -35,7 +35,35 @@ public class Controller {
 		psWrd.put(passWrd, userName);
 	}
 
-	public static Account CreateAccount(String uName, String fName, String lName, String psWord, long bal) {
+	public static Account createAccount(String uName, String fName, String lName, String psWord, long bal) {
+
+		Scanner console = new Scanner(System.in);
+		int setSize = userNameSet.size();
+		boolean isAccCreated = false;
+
+		while (!isAccCreated) {
+			userNameSet.add(uName);
+			if (userNameSet.size() == setSize) {
+				System.out.println("That user name has already been taken. Please enter a different user name.");
+				console = new Scanner(System.in);
+				uName = console.nextLine();
+				userNameSet.add(uName);
+			}
+			if (userNameSet.size() != setSize) {
+				isAccCreated = true;
+			}
+		}
+
+		User user = new User(uName, fName, lName, psWord);
+		Account account = new Account(user, bal);
+
+		System.out.println("New account created: " + account.toString());
+		console.close();
+
+		return account;
+	}
+	
+	public static Account loadAccount(String uName, String fName, String lName, String psWord, long bal) {
 
 		Scanner console = new Scanner(System.in);
 		int setSize = userNameSet.size();
@@ -63,7 +91,7 @@ public class Controller {
 		return account;
 	}
 
-	public static boolean Withdrawl(long withdrawl, Account account) {
+	public static boolean withdrawl(long withdrawl, Account account) {
 
 		if (withdrawl > account.getBallance()) {
 			return false;
@@ -73,7 +101,7 @@ public class Controller {
 		return true;
 	}
 
-	public static boolean Deposit(long deposit, Account account) {
+	public static boolean deposit(long deposit, Account account) {
 
 		account.setBallance(account.getBallance() + deposit);
 		System.out.println("new Ballance: " + account.getBallance());
@@ -106,5 +134,10 @@ public class Controller {
 		}
 		return false;
 	}
+	
+	public static boolean logIn(String userName, String passWord) {
+		return false;
+	}
+
 
 }
