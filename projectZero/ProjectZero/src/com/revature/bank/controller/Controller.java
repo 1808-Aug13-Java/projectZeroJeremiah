@@ -59,7 +59,7 @@ public class Controller {
 		Account account = new Account(user, bal);
 
 		System.out.println("New account created: " + account.toString());
-		console.close();
+//		console.close();
 
 		return account;
 	}
@@ -116,7 +116,7 @@ public class Controller {
 							password = true;
 						}
 					}
-					console.close();
+//					console.close();
 					return retrieveAccount(accInfoRead.get(userIndex), accInfoRead.get(userIndex + 1), accInfoRead.get(userIndex + 2), accInfoRead.get(userIndex + 3),
 							Long.parseLong(accInfoRead.get(userIndex + 4)));
 
@@ -137,7 +137,7 @@ public class Controller {
 //		User user = new User(uName, fName, lName, psWord);
 //		Account account = new Account(user, bal);
 
-		console.close();
+//		console.close();
 
 		return null;
 	}
