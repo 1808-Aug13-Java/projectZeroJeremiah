@@ -1,7 +1,9 @@
 package com.revature.bank.account;
 
 import com.revature.bank.user.User;
-
+/*
+ * 
+ */
 public class Account {
 
 	private User user;
