@@ -88,7 +88,6 @@ public class Driver {
 					String enteredU = console.nextLine();
 					System.out.println("Enter your password.");
 					String enteredP = console.nextLine();
-					System.out.println("Pswd enterd: " + enteredP);
 					currUser = Controller.loadAccount(enteredU, enteredP);
 					System.out.println("logged in successfully as: " + currUser.toString());
 					loggedIn = true;
