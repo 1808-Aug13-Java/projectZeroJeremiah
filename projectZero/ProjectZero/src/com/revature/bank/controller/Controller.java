@@ -89,9 +89,9 @@ public class Controller {
 				e.printStackTrace();
 			}
 			while (line != null) {
-				
+
 				String[] accountInfo = line.split(":");
-				for(String s: accountInfo) {
+				for (String s : accountInfo) {
 					accInfoRead.add(s);
 					System.out.println(" info read: " + s);
 				}
@@ -102,13 +102,13 @@ public class Controller {
 					e.printStackTrace();
 				}
 			}
-			while(!userFound) {
+			while (!userFound) {
 				if (accInfoRead.contains(uName)) {
 					userFound = true;
 					userIndex = accInfoRead.indexOf(uName);
 					System.out.println("paswrd: " + accInfoRead.get(userIndex + 3));
 					while (!password) {
-						if (!accInfoRead.get(userIndex+3).equals(psword)) {
+						if (!accInfoRead.get(userIndex + 3).equals(psword)) {
 							System.out.println("Invalid password. Please try again. " + psword);
 							psword = console.nextLine();
 						} else {
@@ -117,10 +117,11 @@ public class Controller {
 						}
 					}
 //					console.close();
-					return retrieveAccount(accInfoRead.get(userIndex), accInfoRead.get(userIndex + 1), accInfoRead.get(userIndex + 2), accInfoRead.get(userIndex + 3),
+					return retrieveAccount(accInfoRead.get(userIndex), accInfoRead.get(userIndex + 1),
+							accInfoRead.get(userIndex + 2), accInfoRead.get(userIndex + 3),
 							Long.parseLong(accInfoRead.get(userIndex + 4)));
 
-				}else {
+				} else {
 					System.out.println("User does not exist");
 				}
 			}
@@ -141,7 +142,7 @@ public class Controller {
 
 		return null;
 	}
-	
+
 	public static Account retrieveAccount(String uName, String fName, String lName, String psWord, long bal) {
 
 		User user = new User(uName, fName, lName, psWord);
@@ -178,6 +179,77 @@ public class Controller {
 			bw.write(a.toString());
 
 			System.out.println("account Saved");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public static boolean updateAccount(Account a) {
+
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		BufferedReader br = null;
+		int c = 0;
+
+		ArrayList<String> accInfoRead = new ArrayList<String>();
+		try {
+			br = new BufferedReader(new FileReader("resources\\accountDB"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			String line = null;
+			try {
+				line = br.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			while (line != null) {
+
+				String[] accountInfo = line.split("\n");
+				for (String s : accountInfo) {
+					accInfoRead.add(s + "\n");
+					System.out.println(" info read: " + s);
+					c++;
+					if(s.substring(0, a.getUser().getUserName().length()).equals(a.getUser().getUserName())) {
+						System.out.println("found user: " + a.getUser().getUserName());
+						accInfoRead.remove(c-1);
+						accInfoRead.add(c-1, a.toString());;
+					}
+				}
+				try {
+					line = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try {
+			fw = new FileWriter(FILENAME);
+			bw = new BufferedWriter(fw);
+			for(String s: accInfoRead) {
+				bw.write(s);
+			}
+			System.out.println("account updated");
 
 		} catch (IOException e) {
 			e.printStackTrace();

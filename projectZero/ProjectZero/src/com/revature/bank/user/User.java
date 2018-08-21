@@ -2,9 +2,9 @@ package com.revature.bank.user;
 
 public class User {
 
-	private String userName;
-	private String fName;
-	private String lName;
+	protected String userName;
+	protected String fName;
+	protected String lName;
 	private String psWord;
 
 	public User() {
@@ -21,6 +21,32 @@ public class User {
 		this.fName = fName;
 		this.lName = lName;
 		this.psWord = psWord;
+	}
+	
+	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
 	}
 
 	@Override

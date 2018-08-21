@@ -5,7 +5,7 @@ import com.revature.bank.user.User;
  * 
  */
 public class Account {
-
+	
 	private User user;
 	private long ballance;
 

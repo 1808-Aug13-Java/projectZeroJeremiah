@@ -107,6 +107,7 @@ public class Driver {
 						boolean withdrawl = Controller.withdrawl(Long.parseLong(input), currUser);
 						if (withdrawl) {
 							System.out.println("Withdrawl successful. New Ballance: " + currUser.getBallance());
+							Controller.updateAccount(currUser);
 						} else {
 							System.out.println("Withdrawl failed. Current Ballance: " + currUser.getBallance()
 									+ " amount requested: " + input);
@@ -117,6 +118,7 @@ public class Driver {
 						boolean deposit = Controller.deposit(Long.parseLong(input), currUser);
 						if (deposit) {
 							System.out.println("Deposit successful. New Ballance: " + currUser.getBallance());
+							Controller.updateAccount(currUser);
 						} else {
 							System.out.println("Deposit failed. Current Ballance: " + currUser.getBallance()
 									+ " amount requested: " + input);
