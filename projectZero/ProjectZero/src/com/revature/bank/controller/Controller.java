@@ -93,7 +93,6 @@ public class Controller {
 				String[] accountInfo = line.split(":");
 				for (String s : accountInfo) {
 					accInfoRead.add(s);
-					System.out.println(" info read: " + s);
 				}
 				try {
 					line = br.readLine();
@@ -106,13 +105,11 @@ public class Controller {
 				if (accInfoRead.contains(uName)) {
 					userFound = true;
 					userIndex = accInfoRead.indexOf(uName);
-					System.out.println("paswrd: " + accInfoRead.get(userIndex + 3));
 					while (!password) {
 						if (!accInfoRead.get(userIndex + 3).equals(psword)) {
 							System.out.println("Invalid password. Please try again. " + psword);
 							psword = console.nextLine();
 						} else {
-							System.out.println("password correct: " + psword);
 							password = true;
 						}
 					}
@@ -157,14 +154,12 @@ public class Controller {
 			return false;
 		}
 		account.setBallance(account.getBallance() - withdrawl);
-		System.out.println("new Ballance: " + account.getBallance());
 		return true;
 	}
 
 	public static boolean deposit(long deposit, Account account) {
 
 		account.setBallance(account.getBallance() + deposit);
-		System.out.println("new Ballance: " + account.getBallance());
 		return true;
 	}
 
@@ -177,9 +172,6 @@ public class Controller {
 			fw = new FileWriter(FILENAME, true);
 			bw = new BufferedWriter(fw);
 			bw.write(a.toString());
-
-			System.out.println("account Saved");
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -221,12 +213,11 @@ public class Controller {
 				String[] accountInfo = line.split("\n");
 				for (String s : accountInfo) {
 					accInfoRead.add(s + "\n");
-					System.out.println(" info read: " + s);
 					c++;
-					if(s.substring(0, a.getUser().getUserName().length()).equals(a.getUser().getUserName())) {
-						System.out.println("found user: " + a.getUser().getUserName());
-						accInfoRead.remove(c-1);
-						accInfoRead.add(c-1, a.toString());;
+					if (s.substring(0, a.getUser().getUserName().length()).equals(a.getUser().getUserName())) {
+						accInfoRead.remove(c - 1);
+						accInfoRead.add(c - 1, a.toString());
+						;
 					}
 				}
 				try {
@@ -246,7 +237,7 @@ public class Controller {
 		try {
 			fw = new FileWriter(FILENAME);
 			bw = new BufferedWriter(fw);
-			for(String s: accInfoRead) {
+			for (String s : accInfoRead) {
 				bw.write(s);
 			}
 			System.out.println("account updated");

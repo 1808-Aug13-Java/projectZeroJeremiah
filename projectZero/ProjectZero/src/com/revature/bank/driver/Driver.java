@@ -44,7 +44,6 @@ public class Driver {
 				line = br.readLine();
 			}
 			for (String u : Controller.getUserNameSet()) {
-				System.out.println("Users in file: " + u);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
